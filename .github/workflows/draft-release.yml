@@ -29,10 +29,10 @@ jobs:
               repo: context.repo.repo,
               tag_name: zulu_time,
               name: zulu_time,
-              body: "",  // Set body to an empty string instead of null
-              draft: false,  // Publish the release immediately
-              prerelease: false,  // Ensure it's not a prerelease
-              generate_release_notes: true  // Auto-generate changelog
+              body: "",
+              draft: false,
+              prerelease: false,
+              generate_release_notes: true
             });
             core.setOutput('release_id', response.data.id);
         env:
