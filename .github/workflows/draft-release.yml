@@ -18,20 +18,22 @@ jobs:
           ZULU_DATE=$(date -u +"%Y.%m.%d.%H%MZ")
           echo "zulu_time=$ZULU_DATE" >> $GITHUB_ENV
 
-      # Draft the release using GitHub API with auto-generated changelog
+      # Draft the release using a script
       - name: Create Draft Release
-        id: create_release
-        uses: octokit/request-action@v2.x
+        uses: actions/github-script@v6
         with:
-          route: POST /repos/${{ github.repository }}/releases
-          mediaType: |
-            format=json
-          body: |
-            {
-              "tag_name": "${{ env.zulu_time }}",
-              "name": "${{ env.zulu_time }}",
-              "body": null,
-              "draft": true,
-              "generate_release_notes": true
-            }
-          headers: '{"authorization": "token ${{ secrets.GITHUB_TOKEN }}"}'
+          script: |
+            const { zulu_time } = process.env;
+            const response = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: zulu_time,
+              name: zulu_time,
+              body: null,
+              draft: true,
+              generate_release_notes: true
+            });
+            core.setOutput('release_id', response.data.id);
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          zulu_time: ${{ env.zulu_time }}
