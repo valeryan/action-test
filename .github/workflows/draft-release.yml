@@ -21,7 +21,7 @@ jobs:
       # Draft the release using GitHub API with auto-generated changelog
       - name: Create Draft Release
         id: create_release
-        uses: octokit/request-action@v2
+        uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/releases
           mediaType: |
