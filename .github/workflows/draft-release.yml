@@ -24,6 +24,7 @@ jobs:
         with:
           script: |
             const { zulu_time } = process.env;
+            const actor = context.actor;
             const response = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
