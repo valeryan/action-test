@@ -30,7 +30,7 @@ jobs:
               repo: context.repo.repo,
               tag_name: zulu_time
             });
-            const body = `${releaseNotes.data.body}\n\nRelease created by [@${actor}](https://github.com/${actor})`;
+             const body = `${releaseNotes.data.body}\n\nRelease created by <a class="user-link" href="https://github.com/${actor}">${actor}</a>`;
             const response = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
